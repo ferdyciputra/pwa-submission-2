@@ -38,9 +38,9 @@ module.exports = {
     },
     plugins: [
         new WebpackPwaManifest({
-            "name": "Greenday Apps",
-            "short_name": "Greenday Apps",
-            "description": "Aplikasi Informasi tentang Greenday",
+            "name": "Football Apps",
+            "short_name": "Football Apps",
+            "description": "Aplikasi Informasi tentang Sepak Bola",
             "display": "standalone",
             "background_color": "#5c6bc0",
             "theme_color": "#5c6bc0",

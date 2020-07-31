@@ -1,7 +1,7 @@
 {
-    "name": "Greenday Apps",
-    "short_name": "Greenday Apps",
-    "description": "Aplikasi Informasi tentang Greenday",
+    "name": "Football Apps",
+    "short_name": "Football Apps",
+    "description": "Aplikasi Informasi tentang Sepak Bola",
     "start_url": "src/index.html",
     "display": "standalone",
     "background_color": "#5c6bc0",
