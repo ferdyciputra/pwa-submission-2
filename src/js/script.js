@@ -56,7 +56,7 @@ function loadPage() {
                     const e = document.getElementById("standings-select");
                     e.addEventListener('change', function(event) {
                         const valueOption = event.target.value;
-                        console.log(DataSourceApi.getStandings(valueOption));
+                        DataSourceApi.getStandings(valueOption);
                     })
                 } else if (page === 'home') {
                     //klik button go to profile di home
@@ -143,7 +143,7 @@ function loadStandingsPage() {
     for (let index = 0; index < menuMobile.length; index++) {
         menuMobile[index].classList.remove("active")
     }
-    // add class active menu profile
+    // add class active menu standings
     menuWeb[1].classList.add('active')
     menuMobile[1].classList.add('active')
 }

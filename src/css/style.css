@@ -89,3 +89,23 @@ ul.dropdown-content.select-dropdown li span {
     color: #3949ab;
     font-weight: bolder;
 }
+
+.logo-club {
+    width: 25px;
+    height: 25px;
+}
+
+.plus-goal {
+    color: #64dd17;
+    font-weight: bolder;
+}
+
+.minus-goal {
+    color: #d50000;
+    font-weight: bolder;
+}
+
+.points-club, .name-club {
+    color: black;
+    font-weight: bolder;
+}

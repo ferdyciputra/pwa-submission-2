@@ -68,6 +68,58 @@ class DataSourceApi {
             })
             .then(status)
             .then(json)
+            .then(function(data) {
+                const dataStandings = data.standings[0].table;
+                let standingHTML = "";
+                let i = 0;
+                dataStandings.forEach(data => {
+                    let dataTeam = dataStandings[i].team;
+                    let dataImage = replaceURL(dataTeam.crestUrl);
+                    console.log(dataImage);
+                    if (parseInt(data.goalDifference) >= 0) {
+                        standingHTML += `
+                                <tr>
+                                    <td>${data.position}</td>
+                                    <td>
+                                        <img src="${dataImage}" class="logo-club">
+                                    </td>
+                                    <td class="name-club">${dataTeam.name}</td>
+                                    <td>${data.playedGames}</td>
+                                    <td>${data.won}</td>
+                                    <td>${data.draw}</td>
+                                    <td>${data.lost}</td>
+                                    <td>${data.goalsFor}</td>
+                                    <td>${data.goalsAgainst}</td>
+                                    <td class="plus-goal">${data.goalDifference}</td>
+                                    <td class="points-club">${data.points}</td>
+                                    <td><a href="${dataTeam.id}" class="waves-effect waves-light indigo darken-1 btn-small"><i class="material-icons left">info</i>Detail</a></td>
+                                </tr>`
+                    } else {
+                        standingHTML += `
+                                <tr>
+                                    <td>${data.position}</td>
+                                    <td>
+                                        <img src="${dataImage}" class="logo-club">
+                                    </td>
+                                    <td class="name-club">${dataTeam.name}</td>
+                                    <td>${data.playedGames}</td>
+                                    <td>${data.won}</td>
+                                    <td>${data.draw}</td>
+                                    <td>${data.lost}</td>
+                                    <td>${data.goalsFor}</td>
+                                    <td>${data.goalsAgainst}</td>
+                                    <td class="minus-goal">${data.goalDifference}</td>
+                                    <td class="points-club">${data.points}</td>
+                                    <td><a href="${dataTeam.id}" class="waves-effect waves-light indigo darken-1 btn-small"><i class="material-icons left">info</i>Detail</a></td>
+                                </tr>`
+                    }
+                    i += 1;
+                });
+                // Sisipkan komponen tabel ke dalam element dengan id #standings-list
+                document.getElementById("standings-list").innerHTML = standingHTML;
+                let headerStandings = document.getElementById("header-standings");
+                headerStandings.removeAttribute("hidden");
+            })
             .catch(error);
     }
 }
