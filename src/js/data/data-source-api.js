@@ -2,7 +2,11 @@ const base_url = "https://api.football-data.org/v2/";
 const API_KEY = "48782b3f76a641ef8ae9dbbf5e994166";
 
 function replaceURL(url) {
-    return url.replace(/^http:\/\//i, 'https://');
+    if (url === null || url === '') {
+        return '/src/img/dummy-logo-club.png'
+    } else {
+        return url.replace(/^http:\/\//i, 'https://');
+    }
 }
 
 // Blok kode yang akan dipanggil jika fetch berhasil
@@ -81,7 +85,7 @@ class DataSourceApi {
                                 <tr>
                                     <td>${data.position}</td>
                                     <td>
-                                        <img src="${dataImage}" class="logo-club">
+                                        <img src="${dataImage}" class="logo-club" alt="${dataTeam.name}">
                                     </td>
                                     <td class="name-club">${dataTeam.name}</td>
                                     <td>${data.playedGames}</td>
@@ -99,7 +103,7 @@ class DataSourceApi {
                                 <tr>
                                     <td>${data.position}</td>
                                     <td>
-                                        <img src="${dataImage}" class="logo-club">
+                                        <img src="${dataImage}" class="logo-club" alt="${dataTeam.name}">
                                     </td>
                                     <td class="name-club">${dataTeam.name}</td>
                                     <td>${data.playedGames}</td>

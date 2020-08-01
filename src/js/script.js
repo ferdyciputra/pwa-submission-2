@@ -1,4 +1,5 @@
 import DataSourceApi from '../js/data/data-source-api';
+import swal from 'sweetalert';
 
 // Active sidebar nav
 var elems = document.querySelectorAll(".sidenav");
@@ -57,6 +58,7 @@ function loadPage() {
                     e.addEventListener('change', function(event) {
                         const valueOption = event.target.value;
                         DataSourceApi.getStandings(valueOption);
+
                     })
                 } else if (page === 'home') {
                     //klik button go to profile di home
