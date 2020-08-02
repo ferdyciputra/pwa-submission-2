@@ -5,10 +5,13 @@ const WorkboxPlugin = require('workbox-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest')
 
 module.exports = {
-    entry: "./src/app.js",
+    entry: {
+        app: './src/app.js',
+        detailTeam: './src/detail.js',
+    },
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "bundle.js"
+        filename: "[name]/[name].bundle.js"
     },
     module: {
         rules: [{
@@ -76,11 +79,17 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: "./src/index.html",
+            chunks: ["app"],
             filename: "index.html"
         }),
         new HtmlWebpackPlugin({
             template: "./src/nav.html",
             filename: "nav.html"
+        }),
+        new HtmlWebpackPlugin({
+            template: "./src/detail-team.html",
+            chunks: ["detailTeam"],
+            filename: "detail-team.html"
         }),
         new CopyPlugin({
             patterns: [
@@ -88,11 +97,8 @@ module.exports = {
                 { from: 'src/img', to: 'src/img' }
             ],
         }),
-        new WorkboxPlugin.GenerateSW({
-            // these options encourage the ServiceWorkers to get in there fast
-            // and not allow any straggling "old" SWs to hang around
-            clientsClaim: true,
-            skipWaiting: true,
+        new WorkboxPlugin.InjectManifest({
+            swSrc: './src/service-worker.js'
         })
     ]
 }

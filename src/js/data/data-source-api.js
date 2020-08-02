@@ -38,43 +38,13 @@ function error(error) {
 }
 
 class DataSourceApi {
-    static async showAlbums() {
-        const albums = {
-            'tahun': [
-                '1990', '1991', '1994', '1995', '1997', '2000', '2004', '2009', '2012', '2014', '2016', '2020'
-            ],
-            'judul': [
-                '39/Smooth', 'Kerplunk', 'Dookie', 'Insomniac', 'nimrod', 'Warning:', 'American Idiot', '21st Century Breakdown', '¡Uno! ¡DOs! ¡Tre!', 'Demolicious', 'Revolution Radio', 'Father of All'
-            ]
-        };
-        if (Object.keys(albums).length === 0 && albums.constructor === Object) {
-            //Jika object albums tidak memiliki data
-            let albumList = document.querySelector('#albums-list');
-            let row = document.createElement('tr');
-
-            row.innerHTML = "<td>No Data Available</td>";
-            row.innerHTML += "<td>No Data Available</td>";
-            albumList.appendChild(row);
-        } else {
-            for (let index = 0; index < albums['tahun'].length; index++) {
-                //menampilkan data albums ke table
-                let albumList = document.querySelector('#albums-list');
-                let row = document.createElement('tr');
-
-                row.innerHTML = "<td>" + albums['tahun'][index] + "</td>";
-                row.innerHTML += "<td>" + albums['judul'][index] + "</td>";
-                albumList.appendChild(row);
-            }
-        }
-    }
-
     static async getStandings(competitionId) {
         swal({
             title: 'Please Wait..!',
             icon: 'info',
             allowOutsideClick: false,
-            allowEscapeKey: false,
-            allowEnterKey: false
+            closeOnEsc: false,
+            allowEnterKey: false,
         })
         fetch(base_url + `competitions/${competitionId}/standings`, {
                 headers: {
@@ -90,7 +60,6 @@ class DataSourceApi {
                 dataStandings.forEach(data => {
                     let dataTeam = dataStandings[i].team;
                     let dataImage = replaceURL(dataTeam.crestUrl);
-                    console.log(dataImage);
                     if (parseInt(data.goalDifference) >= 0) {
                         standingHTML += `
                                 <tr>
@@ -107,7 +76,6 @@ class DataSourceApi {
                                     <td>${data.goalsAgainst}</td>
                                     <td class="plus-goal">${data.goalDifference}</td>
                                     <td class="points-club">${data.points}</td>
-                                    <td><a href="${dataTeam.id}" class="waves-effect waves-light indigo darken-1 btn-small"><i class="material-icons left">info</i>Detail</a></td>
                                 </tr>`
                     } else {
                         standingHTML += `
@@ -125,7 +93,6 @@ class DataSourceApi {
                                     <td>${data.goalsAgainst}</td>
                                     <td class="minus-goal">${data.goalDifference}</td>
                                     <td class="points-club">${data.points}</td>
-                                    <td><a href="${dataTeam.id}" class="waves-effect waves-light indigo darken-1 btn-small"><i class="material-icons left">info</i>Detail</a></td>
                                 </tr>`
                     }
                     i += 1;
@@ -145,9 +112,44 @@ class DataSourceApi {
             title: 'Please Wait..!',
             icon: 'info',
             allowOutsideClick: false,
-            allowEscapeKey: false,
+            closeOnEsc: false,
             allowEnterKey: false
         })
+
+        if ('caches' in window) {
+            caches.match(base_url + `competitions/${competitionId}/standings`)
+                .then(function(response) {
+                    if (response) {
+                        response.json().then(function(data) {
+                            let logoHTML = "";
+                            let i = 0;
+                            const dataAllTeam = data.standings[0].table;
+                            dataAllTeam.forEach(() => {
+                                let dataTeam = dataAllTeam[i].team;
+                                let dataImage = replaceURL(dataTeam.crestUrl);
+                                logoHTML += `
+                                        <div class="col s12 m6 l3 center-align">
+                                            <div class="card">
+                                                <div class="card-content">
+                                                    <img class="logo-club-card" src="${dataImage}" alt="">
+                                                    <p class="card-name-club center-align">${dataTeam.name}</p>
+                                                </div>
+                                                <div class="card-action"><a href="${dataTeam.id}" class="indigo-text text-darken-1">See Detail</a></div>
+                                            </div>
+                                        </div>
+                                        `
+                                i += 1;
+                            });
+                            // Sisipkan komponen card logo-club ke dalam element dengan id #logo-list
+                            document.getElementById("logo-list").innerHTML = logoHTML;
+                            swal.stopLoading();
+                            swal.close();
+                        })
+                    }
+                })
+                .catch(error);
+        }
+
         fetch(base_url + `competitions/${competitionId}/standings`, {
                 headers: {
                     'X-Auth-Token': API_KEY
@@ -162,7 +164,6 @@ class DataSourceApi {
                 dataAllTeam.forEach(() => {
                     let dataTeam = dataAllTeam[i].team;
                     let dataImage = replaceURL(dataTeam.crestUrl);
-                    console.log(dataTeam);
                     logoHTML += `
                     <div class="col s12 m6 l3 center-align">
                         <div class="card">
@@ -170,7 +171,7 @@ class DataSourceApi {
                                 <img class="logo-club-card" src="${dataImage}" alt="">
                                 <p class="card-name-club center-align">${dataTeam.name}</p>
                             </div>
-                            <div class="card-action"><a href="${dataTeam.id}" class="indigo-text text-darken-1">See Detail</a></div>
+                            <div class="card-action"><a href="./detail-team.html?id=${dataTeam.id}" class="indigo-text text-darken-1">See Detail</a></div>
                         </div>
                     </div>
                     `
@@ -181,6 +182,58 @@ class DataSourceApi {
                 swal.stopLoading();
                 swal.close();
             })
+            .catch(error);
+    }
+
+    static async getDetailTeam() {
+        return new Promise(function(resolve, reject) {
+            // Ambil nilai query parameter (?id=)
+            let urlParams = new URLSearchParams(window.location.search);
+            let idParam = urlParams.get("id");
+
+            swal({
+                title: 'Please Wait..!',
+                icon: 'info',
+                allowOutsideClick: false,
+                closeOnEsc: false,
+                allowEnterKey: false
+            })
+
+            fetch(base_url + `teams/${idParam}`, {
+                    headers: {
+                        'X-Auth-Token': API_KEY
+                    }
+                })
+                .then(status)
+                .then(json)
+                .then(function(data) {
+                    console.log(data);
+                    let dataImage = replaceURL(data.crestUrl);
+                    let detailTeamHTML = `
+                    <div class="card">
+                        <div class="row">
+                            <div class="card-content">
+                                <div class="col s12 m6 l6 center-align">
+                                    <img class="logo-club-card" src="${dataImage}" alt="${data.name}">
+                                </div>
+                                <div class="col s12 m6 l6 center-align">
+                                    <p class="card-name-club center-align">${data.name}</p>
+                                    <p class="card-detail-club">${data.address}</p>
+                                    <p class="card-detail-club">${data.phone}</p>
+                                    <p class="card-detail-club">${data.email}</p>
+                                    <p class="card-detail-club">Stadion ${data.venue}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-action"><a class="waves-effect waves-light btn indigo darken-1">Save to favorite</a></div>
+                    </div>
+                        `
+                    document.getElementById('detail-team-list').innerHTML = detailTeamHTML;
+                    swal.stopLoading();
+                    swal.close();
+                })
+        })
+
     }
 }
 

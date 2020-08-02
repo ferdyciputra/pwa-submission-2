@@ -120,11 +120,19 @@ ul.dropdown-content.select-dropdown li span {
     height: 100px;
 }
 
+.card-name-club {
+    font-weight: bolder;
+}
+
 @media screen and (min-width: 800px) {
     .card-name-club {
-        width: 200px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-weight: bolder;
     }
+}
+
+.card-detail-club {
+    font-size: 14px;
 }
