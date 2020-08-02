@@ -6,7 +6,7 @@ var urlsToCache = [
     "/src/index.html",
     "/src/pages/home.html",
     "/src/pages/about.html",
-    "/src/pages/albums.html",
+    "/src/pages/logo.html",
     "/src/pages/standings.html",
     "/src/css/materialize.min.css",
     "/src/css/style.css",
@@ -14,10 +14,6 @@ var urlsToCache = [
     "/src/js/script.js",
     "/src/js/data/data-source-api.js",
     "/src/img/icon-home.png",
-    "/src/img/icon-albums.png",
-    "/src/img/armstrong.jpg",
-    "/src/img/mike.jpeg",
-    "/src/img/tree.jpg",
     "/src/img/aboutme.png",
     "/src/img/ferdy.jpg",
     "/src/img/icons/icon-72x72.png",
@@ -70,4 +66,25 @@ self.addEventListener("activate", function(event) {
             );
         })
     );
+});
+
+self.addEventListener('fetch', function(event) {
+    const base_url = "https://api.football-data.org/v2/";
+
+    if (event.request.url.indexOf(base_url) > -1) {
+        event.respondWith(
+            caches.open(CACHE_NAME).then(function(cache) {
+                return fetch(event.request).then(function(response) {
+                    cache.put(event.request.url, response.clone());
+                    return response;
+                })
+            })
+        )
+    } else {
+        event.respondWith(
+            caches.match(event.request, { ignoreSearch: true }).then(function(response) {
+                return response || fetch(event.request);
+            })
+        )
+    }
 });

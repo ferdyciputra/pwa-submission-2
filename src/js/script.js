@@ -54,11 +54,10 @@ function loadPage() {
                     let elems = document.querySelector('select');
                     M.FormSelect.init(elems);
                     // ubah value sesuai pilihan option saat klik
-                    const e = document.getElementById("standings-select");
-                    e.addEventListener('change', function(event) {
+                    const standingsSelect = document.getElementById("standings-select");
+                    standingsSelect.addEventListener('change', function(event) {
                         const valueOption = event.target.value;
                         DataSourceApi.getStandings(valueOption);
-
                     })
                 } else if (page === 'home') {
                     //klik button go to profile di home
@@ -66,9 +65,14 @@ function loadPage() {
                     btnStandings.addEventListener('click', function() {
                         loadStandingsPage();
                     })
-                } else if (page === 'albums') {
-                    console.log(page);
-                    DataSourceApi.showAlbums();
+                } else if (page === 'logo') {
+                    let elems = document.querySelector('select');
+                    M.FormSelect.init(elems);
+                    const logoSelect = document.getElementById("logo-select");
+                    logoSelect.addEventListener('change', function(event) {
+                        const valueOption = event.target.value;
+                        DataSourceApi.getLogoTeam(valueOption);
+                    })
                 }
             } else if (this.status == 404) {
                 content.innerHTML = "<p>Halaman tidak ditemukan.</p>";

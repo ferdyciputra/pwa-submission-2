@@ -30,7 +30,11 @@ function json(response) {
 
 // Blok kode untuk menghandle kesalahan di blok catch
 function error(error) {
-    console.log("Error : " + error);
+    swal({
+        title: "Ooopss...",
+        text: error,
+        icon: "error",
+    });
 }
 
 class DataSourceApi {
@@ -65,7 +69,14 @@ class DataSourceApi {
     }
 
     static async getStandings(competitionId) {
-        return fetch(base_url + `competitions/${competitionId}/standings`, {
+        swal({
+            title: 'Please Wait..!',
+            icon: 'info',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false
+        })
+        fetch(base_url + `competitions/${competitionId}/standings`, {
                 headers: {
                     'X-Auth-Token': API_KEY
                 }
@@ -123,8 +134,53 @@ class DataSourceApi {
                 document.getElementById("standings-list").innerHTML = standingHTML;
                 let headerStandings = document.getElementById("header-standings");
                 headerStandings.removeAttribute("hidden");
+                swal.stopLoading();
+                swal.close();
             })
             .catch(error);
+    }
+
+    static async getLogoTeam(competitionId) {
+        swal({
+            title: 'Please Wait..!',
+            icon: 'info',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false
+        })
+        fetch(base_url + `competitions/${competitionId}/standings`, {
+                headers: {
+                    'X-Auth-Token': API_KEY
+                }
+            })
+            .then(status)
+            .then(json)
+            .then(function(data) {
+                let logoHTML = "";
+                let i = 0;
+                const dataAllTeam = data.standings[0].table;
+                dataAllTeam.forEach(() => {
+                    let dataTeam = dataAllTeam[i].team;
+                    let dataImage = replaceURL(dataTeam.crestUrl);
+                    console.log(dataTeam);
+                    logoHTML += `
+                    <div class="col s12 m6 l3 center-align">
+                        <div class="card">
+                            <div class="card-content">
+                                <img class="logo-club-card" src="${dataImage}" alt="">
+                                <p class="card-name-club center-align">${dataTeam.name}</p>
+                            </div>
+                            <div class="card-action"><a href="${dataTeam.id}" class="indigo-text text-darken-1">See Detail</a></div>
+                        </div>
+                    </div>
+                    `
+                    i += 1;
+                });
+                // Sisipkan komponen card logo-club ke dalam element dengan id #logo-list
+                document.getElementById("logo-list").innerHTML = logoHTML;
+                swal.stopLoading();
+                swal.close();
+            })
     }
 }
 

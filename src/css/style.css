@@ -109,3 +109,22 @@ ul.dropdown-content.select-dropdown li span {
     color: black;
     font-weight: bolder;
 }
+
+.logo-container .card:hover {
+    transform: scale(1.03);
+    background: #fff;
+}
+
+.logo-club-card {
+    width: 100px;
+    height: 100px;
+}
+
+@media screen and (min-width: 800px) {
+    .card-name-club {
+        width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
