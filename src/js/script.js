@@ -132,6 +132,12 @@ function loadStandingsPage() {
                 content.innerHTML = xhttp.responseText;
                 let elems = document.querySelector('select');
                 M.FormSelect.init(elems);
+                // ubah value sesuai pilihan option saat klik
+                const standingsSelect = document.getElementById("standings-select");
+                standingsSelect.addEventListener('change', function(event) {
+                    const valueOption = event.target.value;
+                    DataSourceApi.getStandings(valueOption);
+                })
             } else if (this.status == 404) {
                 content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
             } else {
