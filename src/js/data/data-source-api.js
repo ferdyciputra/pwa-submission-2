@@ -192,7 +192,6 @@ class DataSourceApi {
                             </div>
                         </div>
                         <div class="card-action">
-                        <a class="waves-effect waves-light btn indigo darken-1"><i class="material-icons left">favorite</i>Save to favorite</a>
                         </div>
                     </div>
                         `
@@ -202,8 +201,42 @@ class DataSourceApi {
                     swal.close();
                 })
         })
+    }
+
+    static async showDetailTeams(teams) {
+        let favoriteHTML = "";
+        teams.then(function(result) {
+            result.forEach(function(data) {
+                console.log(data);
+                let dataImage = replaceURL(data.crestUrl);
+                favoriteHTML += `
+                <div class="card">
+                        <div class="row">
+                            <div class="card-content">
+                                <div class="col s12 m6 l6 center-align">
+                                    <img class="logo-club-card" src="${dataImage}" alt="${data.name}">
+                                </div>
+                                <div class="col s12 m6 l6 center-align">
+                                    <p class="card-name-club center-align">${data.name}</p>
+                                    <p class="card-detail-club">${data.address}</p>
+                                    <p class="card-detail-club">${data.phone}</p>
+                                    <p class="card-detail-club">${data.email}</p>
+                                    <p class="card-detail-club">Stadion ${data.venue}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                        </div>
+                    </div>
+                `
+                document.getElementById('favorite-list').innerHTML = favoriteHTML;
+            })
+        })
+
 
     }
+
+
 }
 
 export default DataSourceApi;

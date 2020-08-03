@@ -1,5 +1,6 @@
 import DataSourceApi from '../js/data/data-source-api';
 import swal from 'sweetalert';
+import DataSourceDb from './data/db';
 
 // Active sidebar nav
 var elems = document.querySelectorAll(".sidenav");
@@ -73,6 +74,9 @@ function loadPage() {
                         const valueOption = event.target.value;
                         DataSourceApi.getLogoTeam(valueOption);
                     })
+                } else if (page === 'favorite') {
+                    const team = DataSourceDb.getAllTeams();
+                    DataSourceApi.showDetailTeams(team);
                 }
             } else if (this.status == 404) {
                 content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
