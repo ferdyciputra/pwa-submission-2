@@ -116,40 +116,6 @@ class DataSourceApi {
             allowEnterKey: false
         })
 
-        if ('caches' in window) {
-            caches.match(base_url + `competitions/${competitionId}/standings`)
-                .then(function(response) {
-                    if (response) {
-                        response.json().then(function(data) {
-                            let logoHTML = "";
-                            let i = 0;
-                            const dataAllTeam = data.standings[0].table;
-                            dataAllTeam.forEach(() => {
-                                let dataTeam = dataAllTeam[i].team;
-                                let dataImage = replaceURL(dataTeam.crestUrl);
-                                logoHTML += `
-                                        <div class="col s12 m6 l3 center-align">
-                                            <div class="card">
-                                                <div class="card-content">
-                                                    <img class="logo-club-card" src="${dataImage}" alt="">
-                                                    <p class="card-name-club center-align">${dataTeam.name}</p>
-                                                </div>
-                                                <div class="card-action"><a href="${dataTeam.id}" class="indigo-text text-darken-1">See Detail</a></div>
-                                            </div>
-                                        </div>
-                                        `
-                                i += 1;
-                            });
-                            // Sisipkan komponen card logo-club ke dalam element dengan id #logo-list
-                            document.getElementById("logo-list").innerHTML = logoHTML;
-                            swal.stopLoading();
-                            swal.close();
-                        })
-                    }
-                })
-                .catch(error);
-        }
-
         fetch(base_url + `competitions/${competitionId}/standings`, {
                 headers: {
                     'X-Auth-Token': API_KEY
@@ -225,10 +191,13 @@ class DataSourceApi {
                                 </div>
                             </div>
                         </div>
-                        <div class="card-action"><a class="waves-effect waves-light btn indigo darken-1">Save to favorite</a></div>
+                        <div class="card-action">
+                        <a class="waves-effect waves-light btn indigo darken-1"><i class="material-icons left">favorite</i>Save to favorite</a>
+                        </div>
                     </div>
                         `
                     document.getElementById('detail-team-list').innerHTML = detailTeamHTML;
+                    resolve(data);
                     swal.stopLoading();
                     swal.close();
                 })
