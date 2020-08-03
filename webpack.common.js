@@ -47,6 +47,7 @@ module.exports = {
             "display": "standalone",
             "background_color": "#5c6bc0",
             "theme_color": "#5c6bc0",
+            "gcm_sender_id": "935862098186",
             "icons": [{
                     src: path.resolve("src/img/icons/icon-72x72.png"),
                     sizes: "72x72",
