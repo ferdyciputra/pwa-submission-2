@@ -2,7 +2,6 @@ import { precacheAndRoute, PrecacheController } from 'workbox-precaching';
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
 
 // tes commit from dev
-// tes commit from dev 2
 
 precacheAndRoute(self.__WB_MANIFEST);
 
