@@ -1,6 +1,8 @@
 import { precacheAndRoute, PrecacheController } from 'workbox-precaching';
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
 
+// tes commit from dev
+
 precacheAndRoute(self.__WB_MANIFEST);
 
 // const CACHE_NAME = "firstpwa-v2";
