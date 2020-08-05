@@ -51,6 +51,7 @@ function loadPage() {
                 content.innerHTML = xhttp.responseText;
                 activeNav();
                 activeNavMobile();
+
                 if (page === 'standings') {
                     let elems = document.querySelector('select');
                     M.FormSelect.init(elems);
@@ -75,8 +76,28 @@ function loadPage() {
                         DataSourceApi.getLogoTeam(valueOption);
                     })
                 } else if (page === 'favorite') {
-                    const team = DataSourceDb.getAllTeams();
+                    let team = DataSourceDb.getAllTeams();
                     DataSourceApi.showDetailTeams(team);
+
+                    $("#favorite-list").on('click', '.remove', function() {
+                        const value = $(this).data('id');
+                        swal({
+                                title: "Are you sure?",
+                                text: "This team will be deleted from your favorite",
+                                icon: "warning",
+                                buttons: true,
+                                dangerMode: true,
+                            })
+                            .then((willDelete) => {
+                                if (willDelete) {
+                                    DataSourceDb.deleteTeam(value).then(function() {
+                                        loadfavoritePage();
+                                    })
+                                } else {
+                                    swal("Your favorite team is safe!");
+                                }
+                            });
+                    })
                 }
             } else if (this.status == 404) {
                 content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
@@ -125,6 +146,58 @@ function activeNav() {
             this.className += " active";
         });
     }
+}
+
+function loadfavoritePage() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            var content = document.querySelector("#body-content");
+            if (this.status == 200) {
+                content.innerHTML = xhttp.responseText;
+                let team = DataSourceDb.getAllTeams();
+                DataSourceApi.showDetailTeams(team);
+
+                $("#favorite-list").on('click', '.remove', function() {
+                    const value = $(this).data('id');
+                    swal({
+                            title: "Are you sure?",
+                            text: "This team will be deleted from your favorite",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                DataSourceDb.deleteTeam(value).then(function() {
+                                    loadfavoritePage();
+                                })
+                            } else {
+                                swal("Your favorite team is safe!");
+                            }
+                        });
+                })
+
+            } else if (this.status == 404) {
+                content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
+            } else {
+                content.innerHTML = "<p>Ups.. halaman tidak dapat diakses.</p>";
+            }
+        }
+    };
+    xhttp.open("GET", "src/pages/favorite.html", true);
+    xhttp.send();
+
+    // remove all class active
+    for (let i = 0; i < menuWeb.length; i++) {
+        menuWeb[i].classList.remove("active")
+    }
+    for (let index = 0; index < menuMobile.length; index++) {
+        menuMobile[index].classList.remove("active")
+    }
+    // add class active menu standings
+    menuWeb[3].classList.add('active')
+    menuMobile[3].classList.add('active')
 }
 
 function loadStandingsPage() {
