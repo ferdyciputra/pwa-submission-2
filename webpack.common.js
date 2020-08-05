@@ -3,6 +3,7 @@ const path = require("path");
 const CopyPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest')
+const webpack = require("webpack");
 
 module.exports = {
     entry: {
@@ -47,7 +48,7 @@ module.exports = {
             "display": "standalone",
             "background_color": "#5c6bc0",
             "theme_color": "#5c6bc0",
-            "gcm_sender_id": "935862098186",
+            "gcm_sender_id": "188027761654",
             "icons": [{
                     src: path.resolve("src/img/icons/icon-72x72.png"),
                     sizes: "72x72",
@@ -100,6 +101,10 @@ module.exports = {
         }),
         new WorkboxPlugin.InjectManifest({
             swSrc: './src/service-worker.js'
+        }),
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery",
         })
     ]
 }

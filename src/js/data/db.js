@@ -38,12 +38,34 @@ class DataSourceDb {
         return new Promise(function(resolve, reject) {
             dbPromised
                 .then(function(db) {
-                    var tx = db.transaction("detail-team", "readonly");
-                    var store = tx.objectStore("detail-team");
+                    let tx = db.transaction("detail-team", "readonly");
+                    let store = tx.objectStore("detail-team");
                     return store.getAll();
                 })
                 .then(function(teams) {
                     resolve(teams);
+                })
+        })
+    }
+
+    static async deleteTeam(teamId) {
+        return new Promise((resolve, reject) => {
+            dbPromised
+                .then(db => {
+                    const tx = db.transaction("detail-team", `readwrite`);
+                    tx.objectStore("detail-team").delete(teamId);
+                    return tx;
+                }).then(tx => {
+                    if (tx.complete) {
+                        resolve(true)
+                        swal({
+                            title: "Success",
+                            text: "Success deleted Team!",
+                            icon: "success",
+                        });
+                    } else {
+                        reject(new Error(tx.onerror))
+                    }
                 })
         })
     }

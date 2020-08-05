@@ -207,7 +207,6 @@ class DataSourceApi {
         let favoriteHTML = "";
         teams.then(function(result) {
             result.forEach(function(data) {
-                console.log(data);
                 let dataImage = replaceURL(data.crestUrl);
                 favoriteHTML += `
                 <div class="card">
@@ -226,16 +225,16 @@ class DataSourceApi {
                             </div>
                         </div>
                         <div class="card-action">
+                        <a class="waves-effect waves-light btn red accent-4 remove" data-id="${data.id}">
+                            <i class="material-icons left">delete</i> Remove Team
+                        </a>
                         </div>
                     </div>
                 `
                 document.getElementById('favorite-list').innerHTML = favoriteHTML;
             })
         })
-
-
     }
-
 
 }
 
