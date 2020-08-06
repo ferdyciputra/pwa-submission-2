@@ -1,3 +1,5 @@
+import { isEmptyObject } from "jquery";
+
 const base_url = "https://api.football-data.org/v2/";
 const API_KEY = "48782b3f76a641ef8ae9dbbf5e994166";
 
@@ -206,6 +208,23 @@ class DataSourceApi {
     static async showDetailTeams(teams) {
         let favoriteHTML = "";
         teams.then(function(result) {
+            console.log(result.length);
+            if (result.length === 0) {
+                favoriteHTML = `
+                <div class="row">
+                        <div class="col s12 m12 l6 xl6">
+                            <img src="/src/img/icon-favorite.png" class="img-favorite">
+                        </div>
+                        <div class="col s12 m12 l6 xl6">
+                            <h2>No Team Favorite</h2>
+                            <p>Yuk tambahkan team favorite kamu</p>
+                            <a class="waves-effect waves-light btn indigo darken-1" id="btn-goto-logo" href="#logo">Search Now</a>
+                        </div>
+                </div>
+                `
+                document.getElementById('favorite-list').innerHTML = favoriteHTML;
+            }
+
             result.forEach(function(data) {
                 let dataImage = replaceURL(data.crestUrl);
                 favoriteHTML += `

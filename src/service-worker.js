@@ -29,6 +29,7 @@ precacheAndRoute([
     { url: '/src/js/data/db.js', revision: '1' },
     { url: '/src/js/data/idb.js', revision: '1' },
     { url: '/src/img/icon-home.png', revision: '1' },
+    { url: '/src/img/icon-favorite.png', revision: '1' },
     { url: '/src/img/aboutme.png', revision: '1' },
     { url: '/src/img/dummy-logo-club.png', revision: '1' },
     { url: '/src/img/ferdy.jpg', revision: '1' },
