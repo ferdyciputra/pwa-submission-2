@@ -76,6 +76,11 @@ function loadPage() {
                         DataSourceApi.getLogoTeam(valueOption);
                     })
                 } else if (page === 'favorite') {
+                    $(document).ready(function() {
+                        $("#favorite-list").on('click', '#btn-goto-logo', function() {
+                            loadLogoPage();
+                        })
+                    });
                     let team = DataSourceDb.getAllTeams();
                     DataSourceApi.showDetailTeams(team);
 
@@ -155,6 +160,11 @@ function loadfavoritePage() {
             var content = document.querySelector("#body-content");
             if (this.status == 200) {
                 content.innerHTML = xhttp.responseText;
+                $(document).ready(function() {
+                    $("#favorite-list").on('click', '#btn-goto-logo', function() {
+                        loadLogoPage();
+                    })
+                });
                 let team = DataSourceDb.getAllTeams();
                 DataSourceApi.showDetailTeams(team);
 
@@ -235,4 +245,40 @@ function loadStandingsPage() {
     // add class active menu standings
     menuWeb[1].classList.add('active')
     menuMobile[1].classList.add('active')
+}
+
+function loadLogoPage() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            var content = document.querySelector("#body-content");
+            if (this.status == 200) {
+                content.innerHTML = xhttp.responseText;
+                let elems = document.querySelector('select');
+                M.FormSelect.init(elems);
+                const logoSelect = document.getElementById("logo-select");
+                logoSelect.addEventListener('change', function(event) {
+                    const valueOption = event.target.value;
+                    DataSourceApi.getLogoTeam(valueOption);
+                })
+            } else if (this.status == 404) {
+                content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
+            } else {
+                content.innerHTML = "<p>Ups.. halaman tidak dapat diakses.</p>";
+            }
+        }
+    };
+    xhttp.open("GET", "src/pages/logo.html", true);
+    xhttp.send();
+
+    // remove all class active
+    for (let i = 0; i < menuWeb.length; i++) {
+        menuWeb[i].classList.remove("active")
+    }
+    for (let index = 0; index < menuMobile.length; index++) {
+        menuMobile[index].classList.remove("active")
+    }
+    // add class active menu standings
+    menuWeb[2].classList.add('active')
+    menuMobile[2].classList.add('active')
 }
