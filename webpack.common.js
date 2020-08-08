@@ -4,6 +4,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest')
 const webpack = require("webpack");
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -96,11 +97,12 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 { from: 'src/pages', to: 'src/pages' },
-                { from: 'src/img', to: 'src/img' }
+                { from: 'src/img', to: 'src/img' },
+                { from: 'src/push.js', to: 'push.js' }
             ],
         }),
-        new WorkboxPlugin.InjectManifest({
-            swSrc: './src/service-worker.js'
+        new ServiceWorkerWebpackPlugin({
+            entry: path.join(__dirname, 'src/service-worker.js'),
         }),
         new webpack.ProvidePlugin({
             $: "jquery",

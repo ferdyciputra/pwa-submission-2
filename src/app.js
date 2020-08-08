@@ -5,11 +5,13 @@ import "./css/style.css";
 import "../src/js/materialize.js";
 import "./js/script";
 import swal from 'sweetalert';
+import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 
 // REGISTER SERVICE WORKER
 if ('serviceWorker' in navigator) {
+    const registration = runtime.register();
     window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/service-worker.js')
+        registration
             .then(function() {
                 console.log('Pendaftaran ServiceWorker berhasil');
             })
