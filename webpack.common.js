@@ -78,6 +78,11 @@ module.exports = {
                     src: path.resolve("src/img/icons/icon-384x384.png"),
                     sizes: "512x512",
                 },
+                {
+                    src: path.resolve('src/img/icons/maskable_icon.png'),
+                    size: '1024x1024',
+                    purpose: 'maskable'
+                }
             ]
         }),
         new HtmlWebpackPlugin({
