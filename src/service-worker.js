@@ -171,8 +171,9 @@ self.addEventListener('message', event => {
 
 self.addEventListener('fetch', function(event) {
     let base_url = "https://api.football-data.org/";
+    let base_url_font = "https://fonts.googleapis.com/";
 
-    if (event.request.url.indexOf(base_url) > -1) {
+    if (event.request.url.indexOf(base_url) > -1 || event.request.url.indexOf(base_url_font) > -1) {
         event.respondWith(
             caches.open(CACHE_NAME).then(function(cache) {
                 return fetch(event.request).then(function(response) {
