@@ -7,30 +7,34 @@ let dbPromised = idb.open("football", 1, function(upgradeDb) {
     articlesObjectStore.createIndex("name", "name", { unique: false });
 })
 
-
-
 class DataSourceDb {
     static async saveForLater(team) {
         dbPromised
             .then(function(db) {
                 let tx = db.transaction("detail-team", "readwrite");
                 let store = tx.objectStore("detail-team");
-                console.log(team);
-                store.add(team);
-                return tx.complete;
-            })
-            .then(function() {
-                swal({
-                    title: "Success",
-                    text: "Team berhasil disimpan",
-                    icon: "success",
-                });
-            }).catch(function(error) {
-                swal({
-                    title: "Ooopss...",
-                    text: "Team sudah pernah disimpan",
-                    icon: "error",
-                });
+
+                let check = store.get(parseInt(team.id));
+                check.then(result => {
+                    if (result === undefined) {
+                        store.add(team);
+                        swal({
+                            title: "Success",
+                            text: "Team berhasil disimpan",
+                            icon: "success",
+                        });
+                        return tx.complete;
+                    } else {
+                        swal({
+                            title: "Ooopss...",
+                            text: "Team sudah pernah disimpan",
+                            icon: "error",
+                        });
+                    }
+                })
+
+
+
             })
     }
 
