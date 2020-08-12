@@ -1,7 +1,13 @@
-import { isEmptyObject } from "jquery";
-
 const base_url = "https://api.football-data.org/v2/";
 const API_KEY = "48782b3f76a641ef8ae9dbbf5e994166";
+
+function fetchApi(url) {
+    return fetch(url, {
+        headers: {
+            'X-Auth-Token': API_KEY
+        }
+    });
+}
 
 function replaceURL(url) {
     if (url === null || url === '') {
@@ -112,11 +118,7 @@ class DataSourceApi {
             })
         }
 
-        fetch(base_url + `competitions/${competitionId}/standings`, {
-                headers: {
-                    'X-Auth-Token': API_KEY
-                }
-            })
+        fetchApi(base_url + `competitions/${competitionId}/standings`)
             .then(status)
             .then(json)
             .then(function(data) {
@@ -169,7 +171,7 @@ class DataSourceApi {
                 headerStandings.removeAttribute("hidden");
                 swal.stopLoading();
                 swal.close();
-            })
+            }).catch(error);
     }
 
     static async getLogoTeam(competitionId) {
@@ -218,11 +220,7 @@ class DataSourceApi {
             })
         }
 
-        fetch(base_url + `competitions/${competitionId}/standings`, {
-                headers: {
-                    'X-Auth-Token': API_KEY
-                }
-            })
+        fetchApi(base_url + `competitions/${competitionId}/standings`)
             .then(status)
             .then(json)
             .then(function(data) {
@@ -249,7 +247,7 @@ class DataSourceApi {
                 document.getElementById("logo-list").innerHTML = logoHTML;
                 swal.stopLoading();
                 swal.close();
-            })
+            }).catch(error);
     }
 
     static async getDetailTeam() {
@@ -273,7 +271,6 @@ class DataSourceApi {
                 }).then(function(response) {
                     if (response) {
                         response.json().then(function(data) {
-                            console.log(data);
                             let dataImage = replaceURL(data.crestUrl);
                             let detailTeamHTML = `
                             <div class="card">
@@ -304,15 +301,10 @@ class DataSourceApi {
                 })
             }
 
-            fetch(base_url + `teams/${idParam}`, {
-                    headers: {
-                        'X-Auth-Token': API_KEY
-                    }
-                })
+            fetchApi(base_url + `teams/${idParam}`)
                 .then(status)
                 .then(json)
                 .then(function(data) {
-                    console.log(data);
                     let dataImage = replaceURL(data.crestUrl);
                     let detailTeamHTML = `
                     <div class="card">
@@ -345,7 +337,6 @@ class DataSourceApi {
     static async showDetailTeams(teams) {
         let favoriteHTML = "";
         teams.then(function(result) {
-            console.log(result.length);
             if (result.length === 0) {
                 favoriteHTML = `
                 <div class="row">
