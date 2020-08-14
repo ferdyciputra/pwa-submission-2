@@ -109,6 +109,10 @@ module.exports = {
         new ServiceWorkerWebpackPlugin({
             entry: path.join(__dirname, 'src/service-worker.js'),
         }),
+        new WorkboxPlugin.InjectManifest({
+            swSrc: "./src/service-worker.js",
+            swDest: "sw.js"
+        }),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery",
