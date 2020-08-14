@@ -1,11 +1,16 @@
 // import { precacheAndRoute } from 'workbox-precaching';
 // import { registerRoute } from 'workbox-routing';
 // import { StaleWhileRevalidate } from 'workbox-strategies';
-// importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
 
-// precacheAndRoute(self.__WB_MANIFEST, {
-//     ignoreUrlParametersMatching: [/.*/]
-// });
+if (workbox)
+    console.log(`Workbox berhasil dimuat`);
+else
+    console.log(`Workbox gagal dimuat`);
+
+workbox.precaching.precacheAndRoute(self.__WB_MANIFEST, {
+    ignoreUrlParametersMatching: [/.*/],
+});
 
 // workbox.precaching.precacheAndRoute([
 //     { url: '/', revision: '1' },
@@ -41,155 +46,46 @@
 //     { url: '/src/img/icons/icon-192x192.png', revision: '1' },
 //     { url: '/src/img/icons/icon-384x384.png', revision: '1' },
 //     { url: '/src/img/icons/icon-512x512.png', revision: '1' },
+//     { url: '/src/img/icons/maskable_icon.png', revision: '1' },
 // ], {
 //     // Ignore all URL parameters.
-//     ignoreUrlParametersMatching: [/.*/]
+//     ignoreUrlParametersMatching: [/.*/],
 // });
 
-// workbox.routing.registerRoute(
-//     ({ url }) => url.origin === 'https://api.football-data.org',
-//     new workbox.strategies.CacheFirst({
-//         cacheName: workbox.core.cacheNames.precache,
-//         cacheName: 'api-football',
-//         matchOptions: {
-//             ignoreSearch: true,
-//             ignoreVary: true
-//         }
-//     })
-// );
+// Menyimpan cache untuk file font selama 1 tahun
+workbox.routing.registerRoute(
+    /^https:\/\/fonts\.googleapis\.com/,
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'google-fonts',
+        plugins: [
+            new workbox.cacheableResponse.Plugin({
+                statuses: [0, 200],
+            }),
+            new workbox.expiration.Plugin({
+                maxAgeSeconds: 60 * 60 * 24 * 365,
+                maxEntries: 30,
+            }),
+        ],
+    })
+);
 
-const DEBUG = false
-
-const { assets } = global.serviceWorkerOption
-
-const CACHE_NAME = "firstpwa-v2";
-
-let assetsToCache = [...assets, './']
-
-assetsToCache = assetsToCache.map(path => {
-    return new URL(path, global.location).toString()
-})
-
-
-// let urltoCache = [
-//     "/",
-//     "/manifest.json",
-//     "/src/nav.html",
-//     "/src/index.html",
-//     "/src/detail-team.html",
-//     "/src/pages/home.html",
-//     "/src/pages/about.html",
-//     "/src/pages/logo.html",
-//     "/src/pages/standings.html",
-//     "/src/pages/favorite.html",
-//     "/src/css/materialize.min.css",
-//     "/src/css/style.css",
-//     "/src/js/materialize.min.js",
-//     "/src/js/script.js",
-//     "/src/app.js",
-//     "/src/detail.js",
-//     "/src/js/data/data-source-api.js",
-//     "/src/js/data/db.js",
-//     "/src/js/data/idb.js",
-//     "/src/img/icon-home.png",
-//     "/src/img/icon-favorite.png",
-//     "/src/img/aboutme.png",
-//     "/src/img/ferdy.jpg",
-//     "/src/img/dummy-logo-club.png",
-//     "/src/img/icons/icon-72x72.png",
-//     "/src/img/icons/icon-96x96.png",
-//     "/src/img/icons/icon-128x128.png",
-//     "/src/img/icons/icon-144x144.png",
-//     "/src/img/icons/icon-152x152.png",
-//     "/src/img/icons/icon-192x192.png",
-//     "/src/img/icons/icon-384x384.png",
-//     "/src/img/icons/icon-512x512.png",
-// ];
-
-// When the service worker is first added to a computer.
-self.addEventListener('install', event => {
-    // Perform install steps.
-    if (DEBUG) {
-        console.log('[SW] Install event')
-    }
-
-    // Add core website files to cache during serviceworker installation.
-    event.waitUntil(
-        global.caches
-        .open(CACHE_NAME)
-        .then(cache => {
-            return cache.addAll(assetsToCache)
-        })
-        .then(() => {
-            if (DEBUG) {
-                console.log('Cached assets: main', assetsToCache)
-            }
-        })
-        .catch(error => {
-            console.error(error)
-            throw error
-        })
-    )
-})
-
-// After the install event.
-self.addEventListener('activate', event => {
-    if (DEBUG) {
-        console.log('[SW] Activate event')
-    }
-
-    // Clean the caches
-    event.waitUntil(
-        global.caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cacheName => {
-                    // Delete the caches that are not the current one.
-                    if (cacheName.indexOf(CACHE_NAME) === 0) {
-                        return null
-                    }
-
-                    return global.caches.delete(cacheName)
-                })
-            )
-        })
-    )
-})
-
-self.addEventListener('message', event => {
-    switch (event.data.action) {
-        case 'skipWaiting':
-            if (self.skipWaiting) {
-                self.skipWaiting()
-                self.clients.claim()
-            }
-            break
-        default:
-            break
-    }
-})
+workbox.routing.registerRoute(
+    /^https:\/\/api\.football-data\.org/,
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'api-football',
+        plugins: [
+            new workbox.cacheableResponse.Plugin({
+                statuses: [0, 200],
+            }),
+            new workbox.expiration.Plugin({
+                maxAgeSeconds: 60 * 60 * 24 * 365,
+                maxEntries: 30,
+            }),
+        ],
+    })
+);
 
 
-self.addEventListener('fetch', function(event) {
-    let base_url = "https://api.football-data.org/";
-    let base_url_font = "https://fonts.googleapis.com/";
-
-    if (event.request.url.indexOf(base_url) > -1 || event.request.url.indexOf(base_url_font) > -1) {
-        event.respondWith(
-            caches.open(CACHE_NAME).then(function(cache) {
-                return fetch(event.request).then(function(response) {
-                    cache.put(event.request.url, response.clone());
-                    return response;
-                })
-            })
-        )
-    } else {
-        event.respondWith(
-            caches.match(event.request, { ignoreSearch: true }).then(function(response) {
-                return response || fetch(event.request);
-            })
-        )
-    }
-});
 
 self.addEventListener('push', (event) => {
     const title = 'Hello from Football Apps';
