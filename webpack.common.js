@@ -12,7 +12,7 @@ module.exports = {
         detailTeam: './src/detail.js',
     },
     output: {
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, "public"),
         filename: "[name]/[name].bundle.js"
     },
     module: {
