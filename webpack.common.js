@@ -88,7 +88,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "./src/index.html",
             chunks: ["app"],
-            filename: "index.html"
+            filename: "index.html",
+            favicon: "./src/img/icons/maskable_icon.png"
         }),
         new HtmlWebpackPlugin({
             template: "./src/nav.html",
@@ -97,7 +98,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "./src/detail-team.html",
             chunks: ["detailTeam"],
-            filename: "detail-team.html"
+            filename: "detail-team.html",
+            favicon: "./src/img/icons/maskable_icon.png"
         }),
         new CopyPlugin({
             patterns: [
