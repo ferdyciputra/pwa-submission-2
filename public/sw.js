@@ -1,0 +1,41 @@
+var serviceWorkerOption = {
+  "assets": [
+    "/app/app.bundle.js",
+    "/detailTeam/detailTeam.bundle.js",
+    "/src/pages/about.html",
+    "/src/pages/favorite.html",
+    "/src/pages/home.html",
+    "/src/pages/logo.html",
+    "/src/pages/standings.html",
+    "/src/img/aboutme.png",
+    "/src/img/dummy-logo-club.png",
+    "/src/img/ferdy.jpg",
+    "/src/img/icon-favorite.png",
+    "/src/img/icon-home.png",
+    "/src/img/icons/icon-128x128.png",
+    "/src/img/icons/icon-144x144.png",
+    "/src/img/icons/icon-152x152.png",
+    "/src/img/icons/icon-192x192.png",
+    "/src/img/icons/icon-384x384.png",
+    "/src/img/icons/icon-512x512.png",
+    "/src/img/icons/icon-72x72.png",
+    "/src/img/icons/icon-96x96.png",
+    "/src/img/icons/maskable_icon.png",
+    "/push.js",
+    "/manifest.ca312267f038781f2807bb3a1bedce7a.json",
+    "/icon_1024x1024.ca19d86d811d5a898074ba57476a5835.png",
+    "/icon_512x512.7d57f6c45e75da12d207b6151a2d33e4.png",
+    "/icon_192x192.32435459bde3221114c84ecea1ca3500.png",
+    "/icon_152x152.e63a615d3c0e6d8294285a7d55ca9ce3.png",
+    "/icon_144x144.ced30fef11ef377a222b168b26bfdffd.png",
+    "/icon_128x128.d58898ea1bce07d024af0089a456ffb0.png",
+    "/icon_96x96.7ee2e8881e77325492894ec090b99172.png",
+    "/icon_72x72.3d7e89206595ce467c48f70f51349438.png",
+    "/maskable_icon.png",
+    "/index.html",
+    "/nav.html",
+    "/detail-team.html"
+  ]
+};
+        
+        !function(e){var o={};function t(r){if(o[r])return o[r].exports;var n=o[r]={i:r,l:!1,exports:{}};return e[r].call(n.exports,n,n.exports,t),n.l=!0,n.exports}t.m=e,t.c=o,t.d=function(e,o,r){t.o(e,o)||Object.defineProperty(e,o,{enumerable:!0,get:r})},t.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},t.t=function(e,o){if(1&o&&(e=t(e)),8&o)return e;if(4&o&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(t.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&o&&"string"!=typeof e)for(var n in e)t.d(r,n,function(o){return e[o]}.bind(null,n));return r},t.n=function(e){var o=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(o,"a",o),o},t.o=function(e,o){return Object.prototype.hasOwnProperty.call(e,o)},t.p="",t(t.s=0)}([function(e,o){importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js"),workbox?console.log("Workbox berhasil dimuat"):console.log("Workbox gagal dimuat"),workbox.precaching.precacheAndRoute([{'revision':'5e43f3a15b926fe2a8e3f5166a78905b','url':'app/app.bundle.js'},{'revision':'cd6450e0e279b0072ddadb1055ed9d9e','url':'detail-team.html'},{'revision':'921e3ffc42fe19fa8d0d7a07c518e0a2','url':'detailTeam/detailTeam.bundle.js'},{'revision':'ca19d86d811d5a898074ba57476a5835','url':'icon_1024x1024.ca19d86d811d5a898074ba57476a5835.png'},{'revision':'d58898ea1bce07d024af0089a456ffb0','url':'icon_128x128.d58898ea1bce07d024af0089a456ffb0.png'},{'revision':'ced30fef11ef377a222b168b26bfdffd','url':'icon_144x144.ced30fef11ef377a222b168b26bfdffd.png'},{'revision':'e63a615d3c0e6d8294285a7d55ca9ce3','url':'icon_152x152.e63a615d3c0e6d8294285a7d55ca9ce3.png'},{'revision':'32435459bde3221114c84ecea1ca3500','url':'icon_192x192.32435459bde3221114c84ecea1ca3500.png'},{'revision':'7d57f6c45e75da12d207b6151a2d33e4','url':'icon_512x512.7d57f6c45e75da12d207b6151a2d33e4.png'},{'revision':'3d7e89206595ce467c48f70f51349438','url':'icon_72x72.3d7e89206595ce467c48f70f51349438.png'},{'revision':'7ee2e8881e77325492894ec090b99172','url':'icon_96x96.7ee2e8881e77325492894ec090b99172.png'},{'revision':'c4cf8595606449db5f97c108dd405754','url':'index.html'},{'revision':'ca312267f038781f2807bb3a1bedce7a','url':'manifest.ca312267f038781f2807bb3a1bedce7a.json'},{'revision':'9df8406c3e7728577e56c76e9817aa1b','url':'maskable_icon.png'},{'revision':'82c214d809e48c0cf39126ad3973646f','url':'nav.html'},{'revision':'c920d6e54e9711f98613b0e9c63aa8ce','url':'push.js'},{'revision':'ffde44d5cbc4fc34b6220ba8fec3b530','url':'src/img/aboutme.png'},{'revision':'bfb4a83324f63326f805194cc654270a','url':'src/img/dummy-logo-club.png'},{'revision':'99abfd6340020d8b172e33ab705ac0f4','url':'src/img/ferdy.jpg'},{'revision':'5e7b959a263e79ed3667ad4302424566','url':'src/img/icon-favorite.png'},{'revision':'a5d828c9b8e52272ba60d3277327a1ad','url':'src/img/icon-home.png'},{'revision':'d9ef9cbc2831d28725aaf81725b19473','url':'src/img/icons/icon-128x128.png'},{'revision':'230ea4071b81d5ba194752f07c7dce16','url':'src/img/icons/icon-144x144.png'},{'revision':'497cbc2d2e2e3078248e8a00b46b5f32','url':'src/img/icons/icon-152x152.png'},{'revision':'f0ffe3884ba370171c401458387a6858','url':'src/img/icons/icon-192x192.png'},{'revision':'f847de0e074615ce5ef2023d106b8c87','url':'src/img/icons/icon-384x384.png'},{'revision':'218b379c1019f9117b8c398faf647b70','url':'src/img/icons/icon-512x512.png'},{'revision':'9cc148abb92073c9051122b9d36007b8','url':'src/img/icons/icon-72x72.png'},{'revision':'12ec6040c380ff34444799fab3defaf8','url':'src/img/icons/icon-96x96.png'},{'revision':'9df8406c3e7728577e56c76e9817aa1b','url':'src/img/icons/maskable_icon.png'},{'revision':'d2559fb2ff0f3b7609720560838ad19e','url':'src/pages/about.html'},{'revision':'ca29236c3f561f81d594ddd5c62c3ad3','url':'src/pages/favorite.html'},{'revision':'235ca926f3e06041a17d3d44d587afaf','url':'src/pages/home.html'},{'revision':'0f4faee53de440a5c0e2819e9cf4eb54','url':'src/pages/logo.html'},{'revision':'616e47913b5fe4125fe72fbeb87aa7b3','url':'src/pages/standings.html'}],{ignoreUrlParametersMatching:[/.*/]}),workbox.routing.registerRoute(/.*(?:googleapis|gstatic)\.com/,workbox.strategies.staleWhileRevalidate({cacheName:"google-fonts",plugins:[new workbox.cacheableResponse.Plugin({statuses:[0,200]}),new workbox.expiration.Plugin({maxEntries:100,maxAgeSeconds:2592e3})]})),workbox.routing.registerRoute(/.*(?:png|gif|jpg|jpeg|svg)$/,workbox.strategies.cacheFirst({cacheName:"images-cache",plugins:[new workbox.cacheableResponse.Plugin({statuses:[0,200]}),new workbox.expiration.Plugin({maxEntries:100,maxAgeSeconds:2592e3})]})),workbox.routing.registerRoute(/^https:\/\/api\.football-data\.org/,workbox.strategies.staleWhileRevalidate({cacheName:"api-football",plugins:[new workbox.cacheableResponse.Plugin({statuses:[0,200]}),new workbox.expiration.Plugin({maxEntries:100,maxAgeSeconds:2592e3})]})),self.addEventListener("push",(function(e){var o={body:e.data.text()};e.waitUntil(self.registration.showNotification("Hello from Football Apps",o))}))}]);

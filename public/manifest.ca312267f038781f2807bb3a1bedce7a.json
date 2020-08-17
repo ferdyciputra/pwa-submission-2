@@ -1,0 +1,54 @@
+{
+  "icons": [
+    {
+      "src": "icon_1024x1024.ca19d86d811d5a898074ba57476a5835.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon_512x512.7d57f6c45e75da12d207b6151a2d33e4.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_192x192.32435459bde3221114c84ecea1ca3500.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_152x152.e63a615d3c0e6d8294285a7d55ca9ce3.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_144x144.ced30fef11ef377a222b168b26bfdffd.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_128x128.d58898ea1bce07d024af0089a456ffb0.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_96x96.7ee2e8881e77325492894ec090b99172.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_72x72.3d7e89206595ce467c48f70f51349438.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    }
+  ],
+  "name": "Football Apps",
+  "short_name": "Football Apps",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": ".",
+  "description": "Aplikasi Informasi tentang Sepak Bola",
+  "background_color": "#5c6bc0",
+  "theme_color": "#5c6bc0",
+  "gcm_sender_id": "188027761654"
+}

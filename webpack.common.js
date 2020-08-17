@@ -12,7 +12,7 @@ module.exports = {
         detailTeam: './src/detail.js',
     },
     output: {
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, "public"),
         filename: "[name]/[name].bundle.js"
     },
     module: {
@@ -78,12 +78,18 @@ module.exports = {
                     src: path.resolve("src/img/icons/icon-384x384.png"),
                     sizes: "512x512",
                 },
+                {
+                    src: path.resolve('src/img/icons/maskable_icon.png'),
+                    size: '1024x1024',
+                    purpose: 'any maskable'
+                }
             ]
         }),
         new HtmlWebpackPlugin({
             template: "./src/index.html",
             chunks: ["app"],
-            filename: "index.html"
+            filename: "index.html",
+            favicon: "./src/img/icons/maskable_icon.png"
         }),
         new HtmlWebpackPlugin({
             template: "./src/nav.html",
@@ -92,7 +98,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "./src/detail-team.html",
             chunks: ["detailTeam"],
-            filename: "detail-team.html"
+            filename: "detail-team.html",
+            favicon: "./src/img/icons/maskable_icon.png"
         }),
         new CopyPlugin({
             patterns: [
@@ -103,6 +110,10 @@ module.exports = {
         }),
         new ServiceWorkerWebpackPlugin({
             entry: path.join(__dirname, 'src/service-worker.js'),
+        }),
+        new WorkboxPlugin.InjectManifest({
+            swSrc: "./src/service-worker.js",
+            swDest: "sw.js"
         }),
         new webpack.ProvidePlugin({
             $: "jquery",

@@ -6,7 +6,7 @@
     "scripts": {
         "start-dev": "webpack-dev-server --config webpack.dev.js --open",
         "build": "webpack --config webpack.prod.js",
-        "start": "http-server dist"
+        "start": "http-server public"
     },
     "author": "",
     "license": "ISC",
